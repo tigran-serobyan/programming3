@@ -1,11 +1,11 @@
 var matrix = [];
-var n = 70;
-var m = 70;
-var side = 12;
+var n = 30;
+var m = 30;
+var side = 30;
 var Grass_tokos = 70;
 var Sheep_tokos = 20;
 var Wolf_tokos = 5;
-var Human_tokos = 0.1;
+var Human_tokos =0.1;
 var Black_hole_tokos = 0.1;
 var Doctor_tokos = 0.1;
 for (var y = 0; y < n; y++) {

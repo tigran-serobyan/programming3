@@ -1,38 +1,4 @@
-class Sheep {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
-        this.directions = [];
-        this.kerats = 0;
-    }
-    direction() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
-    yntrelVandak(ch) {
-        this.direction();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
-    }
+class Sheep extends Animals{
     bazmanal() {
         if (this.kerats == 10) {
             var norVandak = random(this.yntrelVandak(0));
@@ -43,12 +9,14 @@ class Sheep {
                         grassArr.splice(i, 1);
                         SheepArr.push(new Sheep(norVandak[0], norVandak[1]));
                         matrix[norVandak[1]][norVandak[0]] = 2;
+                        this.kerats = 0;                        
                     }
                 }
             }
             else {
                 SheepArr.push(new Sheep(norVandak[0], norVandak[1]));
                 matrix[norVandak[1]][norVandak[0]] = 2;
+                this.kerats = 0;
             }
         }
     }
@@ -69,17 +37,6 @@ class Sheep {
             }
         }
     }
-    sharjvel() {
-        var norVandak = random(this.yntrelVandak(0));
-        if (norVandak) {
-            matrix[norVandak[1]][norVandak[0]] = 2;
-            matrix[this.y][this.x] = 0;
-            this.x = norVandak[0];
-            this.y = norVandak[1];
-        }
-        this.energy--;
-        this.kerats = 0;
-    }
     utel() {
         var norVandak = random(this.yntrelVandak(1));
         if (norVandak) {
@@ -98,7 +55,7 @@ class Sheep {
 
         }
         else {
-            this.sharjvel();
+            this.sharjvel(2);
         }
     }
 }

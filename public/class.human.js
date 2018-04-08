@@ -1,23 +1,4 @@
-class Human {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
-        this.directions = [];
-        this.kerats = 0;
-    }
-    direction() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
+class Human extends Animals{
     animal_direction() {
         this.anilam_direction = [];
         for (var i = 0; i < n; i++) {
@@ -30,21 +11,6 @@ class Human {
             this.animal_direction[i][0] = i - n;
             this.animal_direction[i][1] = this.y;
         }
-    }
-    yntrelVandak(ch) {
-        this.direction();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
     }
     yntrelKendani(ch) {
         this.animal_direction();
@@ -62,14 +28,15 @@ class Human {
         return found;
     }
     bazmanal() {
-        var Human = random(this.yntrelVandak(4));
-        if (this.kerats >= 100 && Human) {
+        var human = random(this.yntrelVandak(4));
+        if (this.kerats >= 100 && human) {
             var norVandak = random(this.yntrelVandak(0));
             if (!norVandak) {
                 norVandak = random(this.yntrelVandak(1));
                 for (var i in grassArr && norVandak) {
                     if (grassArr[i].x == norVandak[0] && grassArr[i].y == norVandak[1]) {
                         grassArr.splice(i, 1);
+                        con
                         HumanArr.push(new Human(norVandak[0], norVandak[1]));
                         matrix[norVandak[1]][norVandak[0]] = 4;
                     }
@@ -91,18 +58,6 @@ class Human {
                 }
             }
         }
-    }
-    sharjvel() {
-        var norVandak = random(this.yntrelVandak(0));
-        if (norVandak) {
-            matrix[norVandak[1]][norVandak[0]] = 4;
-            matrix[this.y][this.x] = 0;
-            this.x = norVandak[0];
-            this.y = norVandak[1];
-            this.grass = false;
-        }
-        this.energy--;
-        this.kerats = 0;
     }
     utel() {
         var norVandak = random(this.yntrelKendani(7));
@@ -170,7 +125,7 @@ class Human {
                         this.kerats += 5;
                     }
                     else {
-                        this.sharjvel();
+                        this.sharjvel(4);
                     }
                 }
             }
