@@ -1,4 +1,4 @@
-class Sheep {
+module.exports = class {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -34,36 +34,37 @@ class Sheep {
         return found;
     }
     bazmanal() {
-        if (this.kerats == 10) {
+        var Wolf = random(this.yntrelVandak(3));
+        if (this.kerats == 10 && Wolf) {
             var norVandak = random(this.yntrelVandak(0));
             if (norVandak.length == 0) {
                 norVandak = random(this.yntrelVandak(1));
                 for (var i in grassArr) {
                     if (grassArr[i].x == norVandak[0] && grassArr[i].y == norVandak[1]) {
                         grassArr.splice(i, 1);
-                        SheepArr.push(new Sheep(norVandak[0], norVandak[1]));
-                        matrix[norVandak[1]][norVandak[0]] = 2;
+                        WolfArr.push(new Wolf(norVandak[0], norVandak[1]));
+                        matrix[norVandak[1]][norVandak[0]] = 3;
                     }
                 }
             }
             else {
-                SheepArr.push(new Sheep(norVandak[0], norVandak[1]));
-                matrix[norVandak[1]][norVandak[0]] = 2;
+                WolfArr.push(new Wolf(norVandak[0], norVandak[1]));
+                matrix[norVandak[1]][norVandak[0]] = 3;
             }
         }
     }
     satkel() {
         if (this.energy <= 0) {
-            for (var i in SheepArr) {
-                if (SheepArr[i].x == this.x && SheepArr[i].y == this.y) {
+            for (var i in WolfArr) {
+                if (WolfArr[i].x == this.x && WolfArr[i].y == this.y) {
                     var life = Math.floor(Math.random() * 5);
                     if (life == 4) {
-                        matrix[this.y][this.x] = 7;
+                        matrix[this.y][this.x] = 8;
                     }
                     else {
                         matrix[this.y][this.x] = 0;
                     }
-                    SheepArr.splice(i, 1);
+                    WolfArr.splice(i, 1);
                     break;
                 }
             }
@@ -72,33 +73,47 @@ class Sheep {
     sharjvel() {
         var norVandak = random(this.yntrelVandak(0));
         if (norVandak) {
-            matrix[norVandak[1]][norVandak[0]] = 2;
-            matrix[this.y][this.x] = 0;
+            matrix[norVandak[1]][norVandak[0]] = 3;
             this.x = norVandak[0];
             this.y = norVandak[1];
+            this.grass = false;
+        }
+        else {
+            norVandak = random(this.yntrelVandak(1));
+            if (norVandak) {
+                matrix[norVandak[1]][norVandak[0]] = 3;
+                this.x = norVandak[0];
+                this.y = norVandak[1];
+                this.grass = true;
+            }
         }
         this.energy--;
         this.kerats = 0;
     }
     utel() {
-        var norVandak = random(this.yntrelVandak(1));
-        if (norVandak) {
+        if (this.grass) {
+            matrix[this.y][this.x] = 1;
+        }
+        else {
             matrix[this.y][this.x] = 0;
+        }
+        var norVandak = random(this.yntrelVandak(2));
+        if (norVandak) {
             this.x = norVandak[0];
             this.y = norVandak[1];
-            for (var i in grassArr) {
-                if (grassArr[i].x == this.x && grassArr[i].y == this.y) {
-                    grassArr.splice(i, 1);
+            for (var i in SheepArr) {
+                if (SheepArr[i].x == this.x && SheepArr[i].y == this.y) {
+                    SheepArr.splice(i, 1);
                     break;
                 }
             }
-            matrix[this.y][this.x] = 2;
-            this.energy = 5;
+            matrix[this.y][this.x] = 3;
+            this.energy = 15;
             this.kerats++;
-
+            this.grass = false;
         }
         else {
             this.sharjvel();
         }
     }
-}
+};

@@ -1,4 +1,4 @@
-class Doctor {
+module.exports = class {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -31,4 +31,4 @@ class Doctor {
             matrix[this.y][this.x] = 6;
         }
     }
-}
+};

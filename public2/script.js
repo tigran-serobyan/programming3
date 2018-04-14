@@ -1,3 +1,4 @@
+function random(v){return v[Math.floor(Math.random()*v.length)]};
 var matrix = [];
 var n = 20;
 var m = 20;
@@ -5,9 +6,15 @@ var side = 12;
 var Grass_tokos = 70;
 var Sheep_tokos = 20;
 var Wolf_tokos = 5;
-var Human_tokos = 0.1;
-var Black_hole_tokos = 0.1;
-var Doctor_tokos = 0.1;
+var Human_tokos = 0.25;
+var Black_hole_tokos = 1;
+var Doctor_tokos = 0.25;
+var Black_hole = require('./class.black_hole.js');
+var Doctor = require('./class.doctor.js');
+var Grass = require('./class.grass.js');
+var Human = require('./class.human.js');
+var Sheep = require('./class.sheep.js');
+var Wolf = require('./class.wolf.js');
 for (var y = 0; y < n; y++) {
     matrix[y] = [];
     for (var x = 0; x < m; x++) {
@@ -76,9 +83,6 @@ var HumanArr = [];
 var Black_holeArr = [];
 var DoctorArr = [];
 function setup() {
-    frameRate(30);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#ececec');
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -101,50 +105,19 @@ function setup() {
             }
         }
     }
-    strokeWeight(0);
 }
+setup();
 
 function draw() {
+    var k = ""; 
     for (var y = 0; y < matrix.length; y++) {
+        var l = "";
         for (var x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] == 1) {
-                fill("green");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 2) {
-                fill("yellow");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 3) {
-                fill("red");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 4) {
-                fill("orange");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 5) {
-                fill("black");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 6) {
-                fill("#1ab2ff");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 7) {
-                fill("#664d00");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 8) {
-                fill("#660000");
-                rect(x * side, y * side, side, side);
-            }
-            else if (matrix[y][x] == 0) {
-                fill("#ececec");
-                rect(x * side, y * side, side, side);
-            }
+            l += matrix[y][x] + " ";
         }
+        k += l +"\n"
     }
+    console.log(k);
     for (var i in grassArr) {
         grassArr[i].bazmanal();
     }
@@ -171,4 +144,6 @@ function draw() {
     for (var i in DoctorArr) {
         DoctorArr[i].bujel();
     }
+    setInterval(draw, 500);
 }
+draw();

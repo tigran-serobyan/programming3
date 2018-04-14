@@ -1,4 +1,4 @@
-class Black_hole {
+module.exports = class {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -93,4 +93,4 @@ class Black_hole {
             }
         }
     }
-}
+};
