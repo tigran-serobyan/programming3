@@ -1,40 +1,11 @@
-class Wolf {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
-        this.directions = [];
-        this.kerats = 0;
-    }
-    direction() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
-    yntrelVandak(ch) {
-        this.direction();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-
-        }
-        return found;
-    }
+class Wolf extends Animals {
     bazmanal() {
-        var Wolf = random(this.yntrelVandak(3));
+        var Wolf = this.yntrelVandak(3);
+        for (var i in Wolf) {
+            if (Wolf[i].gender != this.gender) {
+                Wolf = Wolf[i];
+            }
+        }
         if (this.kerats == 10 && Wolf) {
             var norVandak = random(this.yntrelVandak(0));
             if (norVandak.length == 0) {
@@ -50,6 +21,8 @@ class Wolf {
             else {
                 WolfArr.push(new Wolf(norVandak[0], norVandak[1]));
                 matrix[norVandak[1]][norVandak[0]] = 3;
+                this.kerats = 0;
+                this.kerats = 0;
             }
         }
     }
@@ -57,13 +30,7 @@ class Wolf {
         if (this.energy <= 0) {
             for (var i in WolfArr) {
                 if (WolfArr[i].x == this.x && WolfArr[i].y == this.y) {
-                    var life = Math.floor(Math.random() * 5);
-                    if (life == 4) {
-                        matrix[this.y][this.x] = 8;
-                    }
-                    else {
-                        matrix[this.y][this.x] = 0;
-                    }
+                    matrix[this.y][this.x] = 0;
                     WolfArr.splice(i, 1);
                     break;
                 }
@@ -87,7 +54,7 @@ class Wolf {
                 this.grass = true;
             }
         }
-        this.energy--;
+        this.energy -= 0.5;
         this.kerats = 0;
     }
     utel() {
@@ -108,7 +75,7 @@ class Wolf {
                 }
             }
             matrix[this.y][this.x] = 3;
-            this.energy = 15;
+            this.energy = 25;
             this.kerats++;
             this.grass = false;
         }
