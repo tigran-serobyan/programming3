@@ -1,4 +1,12 @@
 class Wolf extends Animals {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.energy = 5;
+        this.directions = [];
+        this.kerats = 0;
+        this.gender = Math.floor(Math.random()*2);
+    }
     bazmanal() {
         var Wolf = this.yntrelVandak(3);
         for (var i in Wolf) {

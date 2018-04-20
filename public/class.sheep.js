@@ -1,4 +1,12 @@
 class Sheep extends Animals{
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.energy = 5;
+        this.directions = [];
+        this.kerats = 0;
+        this.gender = Math.floor(Math.random()*2);
+    }
     bazmanal() {
         if (this.kerats == 10) {
             var norVandak = random(this.yntrelVandak(0));

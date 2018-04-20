@@ -1,4 +1,12 @@
 class Human extends Animals {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.energy = 5;
+        this.directions = [];
+        this.kerats = 0;
+        this.gender = Math.floor(Math.random()*2);
+    }
     animal_direction() {
         this.anilam_direction = [];
         for (var i = 0; i < n; i++) {

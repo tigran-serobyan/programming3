@@ -1,13 +1,16 @@
+// var socket = io.connect('http://localhost:3000');
 var matrix = [];
 var n = 40;
 var m = 40;
 var side = 12;
 var Grass_tokos = 75;
 var Sheep_tokos = 20;
-var Wolf_tokos = 0;
-var Human_tokos = 0.1;
+var Wolf_tokos = 2;
+var Human_tokos = 1;
 var Black_hole_tokos = 0.1;
-var time = 12;
+var time = 0;
+var time_h = 12;
+var time_m = 0;
 for (var y = 0; y < n; y++) {
     matrix[y] = [];
     for (var x = 0; x < m; x++) {
@@ -76,8 +79,7 @@ var Black_holeArr = [];
 var White_holeArr = [];
 function setup() {
     frameRate(30);
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#bcbcbc');
+    createCanvas(matrix[0].length * side, matrix.length * side+50);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -103,14 +105,23 @@ function setup() {
     strokeWeight(0);
 }
 function draw() {
-    time += 5;
-    if (time > 200) {
+    background('#bcbcbc');
+    time_m += 15;
+    if (time_m >= 60) {
+        time_h ++;
+        time_m = 0;
+    }
+    if (time_h >= 24) {
+        time_h = 0;
+    }
+    time += 1;
+    if(time >= 240){
         time = 0;
     }
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                if (time < 100) {
+                if (time < 120) {
                     var c = 150 - time;
                 }
                 else {
@@ -120,7 +131,7 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 2) {
-                if (time < 100) {
+                if (time < 120) {
                     var c = 250 - time;
                 }
                 else {
@@ -130,7 +141,7 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 3) {
-                if (time < 100) {
+                if (time < 120) {
                     var c = 250 - time;
                 }
                 else {
@@ -140,7 +151,7 @@ function draw() {
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 4) {
-                if (time < 100) {
+                if (time < 120) {
                     var c = 250 - time;
                 }
                 else {
@@ -187,4 +198,7 @@ function draw() {
         Black_holeArr[i].bazmanal();
         Black_holeArr[i].anhetanal();
     }
+    textSize(15);
+    fill("black");
+    text('The time is '+time_h+":"+time_m,0, matrix[0].length * side+30);
 }

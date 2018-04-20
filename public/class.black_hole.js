@@ -58,7 +58,7 @@ class Black_hole extends Hole{
                     for (var j in SheepArr) {
                         if (SheepArr[j].x == [harevanner[i][0]] && SheepArr[j].y == [harevanner[i][1]]) {
                             SheepArr.splice(j, 1);
-                            if(Math.floor(Math.random()*11) == 10){
+                            if(Math.floor(Math.random()*6) == 5){
                                 White_holeArr[Math.floor(Math.random()*White_holeArr.length)].stexcel(2);
                             }
                             break;
@@ -71,7 +71,7 @@ class Black_hole extends Hole{
                     for (var j in WolfArr) {
                         if (WolfArr[j].x == [harevanner[i][0]] && WolfArr[j].y == [harevanner[i][1]]) {
                             WolfArr.splice(j, 1);
-                            if(Math.floor(Math.random()*11) == 10){
+                            if(Math.floor(Math.random()*6) == 5){
                                 White_holeArr[Math.floor(Math.random()*White_holeArr.length)].stexcel(3);
                             }
                             break;
@@ -84,7 +84,7 @@ class Black_hole extends Hole{
                     for (var j in HumanArr) {
                         if (HumanArr[j].x == [harevanner[i][0]] && HumanArr[j].y == [harevanner[i][1]]) {
                             HumanArr.splice(j, 1);
-                            if(Math.floor(Math.random()*21) == 20){
+                            if(Math.floor(Math.random()*11) == 10){
                                 White_holeArr[Math.floor(Math.random()*White_holeArr.length)].stexcel(4);
                             }
                             break;
