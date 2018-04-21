@@ -1,20 +1,28 @@
 class Wolf extends Animals {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.energy = 5;
-        this.directions = [];
-        this.kerats = 0;
-        this.gender = Math.floor(Math.random()*2);
-    }
     bazmanal() {
-        var Wolf = this.yntrelVandak(3);
-        for (var i in Wolf) {
-            if (Wolf[i].gender != this.gender) {
-                Wolf = Wolf[i];
+        var Wolf2Arr = this.yntrelVandak(3);
+        var Wolf2;
+        var Wolf2Ill;
+        for (var i in WolfArr) {
+            if (Wolf2Arr[0] && Wolf2Arr[0][0]) {
+                for (var k in Wolf2Arr) {
+                    if (Wolf2Arr[k][0] == WolfArr[i].x & Wolf2Arr[k][1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=3) {
+                        Wolf2Ill = WolfArr[i].ill;
+                        Wolf2 = Wolf2Arr[k];
+                        break;
+                    }
+                }
+            }
+            else {
+                if (Wolf2Arr[0] == WolfArr[i].x & Wolf2Arr[1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=3) {
+                    Wolf2 = Wolf2Arr;                    
+                    Wolf2Ill = WolfArr[i].ill;
+                    break;
+                }
             }
         }
-        if (this.kerats == 10 && Wolf) {
+
+        if (this.kerats == 10 && Wolf2 && this.old_y>=3) {
             var norVandak = random(this.yntrelVandak(0));
             if (norVandak.length == 0) {
                 norVandak = random(this.yntrelVandak(1));
@@ -22,15 +30,34 @@ class Wolf extends Animals {
                     if (grassArr[i].x == norVandak[0] && grassArr[i].y == norVandak[1]) {
                         grassArr.splice(i, 1);
                         WolfArr.push(new Wolf(norVandak[0], norVandak[1]));
+                        if (this.ill || Wolf2Ill) {
+                            WolfArr[WolfArr.length - 1].ill = true;
+                        }
                         matrix[norVandak[1]][norVandak[0]] = 3;
+                        this.kerats = 0;
+                        for (var k in WolfArr) {
+                            if (Wolf2[0] == WolfArr[k].x & Wolf2[1] == WolfArr[k].y) {
+                                WolfArr[k].kerats = 0;
+                                break;
+                            }
+                        }
+                        break;
                     }
                 }
             }
             else {
                 WolfArr.push(new Wolf(norVandak[0], norVandak[1]));
                 matrix[norVandak[1]][norVandak[0]] = 3;
+                if (this.ill || Wolf2Ill) {
+                    WolfArr[WolfArr.length - 1].ill = true;
+                }
                 this.kerats = 0;
-                this.kerats = 0;
+                for (var k in WolfArr) {
+                    if (Wolf2[0] == WolfArr[k].x & Wolf2[1] == WolfArr[k].y) {
+                        WolfArr[k].kerats = 0;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -66,6 +93,10 @@ class Wolf extends Animals {
         this.kerats = 0;
     }
     utel() {
+        if (this.ill) {
+            this.energy -= 0.3;
+            this.kerats -= 0.3;
+        }
         if (this.grass) {
             matrix[this.y][this.x] = 1;
         }
@@ -78,6 +109,9 @@ class Wolf extends Animals {
             this.y = norVandak[1];
             for (var i in SheepArr) {
                 if (SheepArr[i].x == this.x && SheepArr[i].y == this.y) {
+                    if (SheepArr[i].ill) {
+                        this.ill = true;
+                    }
                     SheepArr.splice(i, 1);
                     break;
                 }

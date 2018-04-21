@@ -2,7 +2,7 @@ class Hole {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.multiply = 100;
+        this.multiply = 80;
         this.kerats = 0;
         this.directions = [
             [this.x - 1, this.y - 1],

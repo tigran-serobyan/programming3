@@ -2,6 +2,7 @@ class Grass {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.ill = false;
         this.multiply = Math.floor(Math.random() * 7) + 2;
         this.multiplyy = this.multiply;
         this.directions = [

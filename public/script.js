@@ -1,4 +1,7 @@
-// var socket = io.connect('http://localhost:3000');
+function main() {
+    var socket = io.connect('http://localhost:3000');
+}
+window.onload = main;
 var matrix = [];
 var n = 40;
 var m = 40;
@@ -11,6 +14,7 @@ var Black_hole_tokos = 0.1;
 var time = 0;
 var time_h = 12;
 var time_m = 0;
+var weather = 0;
 for (var y = 0; y < n; y++) {
     matrix[y] = [];
     for (var x = 0; x < m; x++) {
@@ -79,14 +83,15 @@ var Black_holeArr = [];
 var White_holeArr = [];
 function setup() {
     frameRate(30);
-    createCanvas(matrix[0].length * side, matrix.length * side+50);
+    createCanvas(matrix[0].length * side, matrix.length * side + 50);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
                 grassArr.push(new Grass(x, y));
             }
             else if (matrix[y][x] == 2) {
-                SheepArr.push(new Sheep(x, y));
+                var new_sheep = new Sheep(x, y);
+                SheepArr.push(new_sheep);
             }
             else if (matrix[y][x] == 3) {
                 WolfArr.push(new Wolf(x, y));
@@ -97,8 +102,10 @@ function setup() {
             else if (matrix[y][x] == 5 && matrix[y + 1][x + 1] == 5) {
                 Black_holeArr.push(new Black_hole(x, y));
             }
-            else if (matrix[y][x] == 6 && matrix[y + 1][x + 1] == 6) {
-                White_holeArr.push(new White_hole(x, y));
+            else if (matrix[y][x] == 6) {
+                if (matrix[y + 1][x + 1] == 6) {
+                    White_holeArr.push(new White_hole(x, y));
+                }
             }
         }
     }
@@ -106,36 +113,93 @@ function setup() {
 }
 function draw() {
     background('#bcbcbc');
-    time_m += 15;
+    time_m += 18;
     if (time_m >= 60) {
-        time_h ++;
-        time_m = 0;
+        time_h++;
+        time_m -= 60;
     }
     if (time_h >= 24) {
         time_h = 0;
     }
-    time += 1;
-    if(time >= 240){
+    time += 3;
+    if (time >= 240) {
         time = 0;
+        var old_y = 0;
+        for(var i in SheepArr){
+            if(SheepArr[i].old_y > old_y){
+                old_y = SheepArr[i].old_y;
+            }
+        }
+        for(var i in WolfArr){
+            if(WolfArr[i].old_y > old_y){
+                old_y = WolfArr[i].old_y;
+            }
+        }
+        for(var i in HumanArr){
+            if(HumanArr[i].old_y > old_y){
+                old_y = HumanArr[i].old_y;
+            }
+        }
+        var data = {
+            Grass:grassArr.length,
+            Sheep:SheepArr.length,
+            Wolf:WolfArr.length,
+            Human:HumanArr.length,
+            old: old_y
+        };
+        socket.emit("send data", data);
+    }
+    weather += 0.0025;
+    if (weather >= 4) {
+        weather = 0;
+    }
+    if (weather == 1 || weather == 3) {
+        random(grassArr).ill = true;
+        random(grassArr).ill = true;
+        random(grassArr).ill = true;
     }
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                if (time < 120) {
-                    var c = 150 - time;
+                if (weather >= 3 && weather < 4) {
+                    if (time < 120) {
+                        var c = 220 - time;
+                    }
+                    else {
+                        var c = (-20) + time;
+                    }
+                    var c2 = Math.floor(c / 1.5) + 20;
+                    fill("rgb(" + c + "," + c + "," + c + ")");
+                    rect(x * side, y * side, side, side);
+                }
+                else if (weather >= 1 && weather < 2) {
+                    if (time < 120) {
+                        var c = 150 - time;
+                    }
+                    else {
+                        var c = (-90) + time;
+                    }
+                    var c2 = Math.floor(c / 2.5);
+                    fill("rgb(" + c + "," + c + "," + c2 + ")");
+                    rect(x * side, y * side, side, side);
                 }
                 else {
-                    var c = (-50) + time;
+                    if (time < 120) {
+                        var c = 150 - time;
+                    }
+                    else {
+                        var c = (-90) + time;
+                    }
+                    fill("rgb(0," + c + ",0)");
+                    rect(x * side, y * side, side, side);
                 }
-                fill("rgb(0," + c + ",0)");
-                rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 2) {
                 if (time < 120) {
                     var c = 250 - time;
                 }
                 else {
-                    var c = 50 + time;
+                    var c = 10 + time;
                 }
                 fill("rgb(" + c + "," + c + ",0)");
                 rect(x * side, y * side, side, side);
@@ -145,7 +209,7 @@ function draw() {
                     var c = 250 - time;
                 }
                 else {
-                    var c = 50 + time;
+                    var c = 10 + time;
                 }
                 fill("rgb(" + c + ",0,0)");
                 rect(x * side, y * side, side, side);
@@ -155,10 +219,10 @@ function draw() {
                     var c = 250 - time;
                 }
                 else {
-                    var c = 50 + time;
+                    var c = 10 + time;
                 }
-                var c2 =Math.round(c/2);
-                fill("rgb(" + c + ","+c2+",0)");
+                var c2 = Math.round(c / 2);
+                fill("rgb(" + c + "," + c2 + ",0)");
                 rect(x * side, y * side, side, side);
             }
             else if (matrix[y][x] == 5) {
@@ -182,16 +246,25 @@ function draw() {
         SheepArr[i].utel();
         SheepArr[i].bazmanal();
         SheepArr[i].satkel();
+        if (SheepArr[i] && time_h == 0) {
+            SheepArr[i].old();
+        }
     }
     for (var i in WolfArr) {
         WolfArr[i].utel();
         WolfArr[i].bazmanal();
         WolfArr[i].satkel();
+        if (WolfArr[i] && time_h == 0) {
+            WolfArr[i].old();
+        }
     }
     for (var i in HumanArr) {
         HumanArr[i].utel();
         HumanArr[i].bazmanal();
         HumanArr[i].mahanal();
+        if (HumanArr[i] && time_h == 0) {
+            HumanArr[i].old();
+        }
     }
     for (var i in Black_holeArr) {
         Black_holeArr[i].utel();
@@ -200,5 +273,18 @@ function draw() {
     }
     textSize(15);
     fill("black");
-    text('The time is '+time_h+":"+time_m,0, matrix[0].length * side+30);
+    text('The time is ' + time_h + ":" + time_m, 0, matrix[0].length * side + 30);
+    if (weather > 0 && weather < 1) {
+        text('Now is ' + "Spring", matrix.length * side - 120, matrix[0].length * side + 30);
+    }
+    else if (weather > 1 && weather < 2) {
+        text('Now is ' + "Summer", matrix.length * side - 120, matrix[0].length * side + 30);
+    }
+    else if (weather > 2 && weather < 3) {
+        text('Now is ' + "Autumn", matrix.length * side - 120, matrix[0].length * side + 30);
+    }
+    else if (weather > 3 && weather < 4) {
+        text('Now is ' + "Winter", matrix.length * side - 120, matrix[0].length * side + 30);
+    }
+
 }

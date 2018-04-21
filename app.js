@@ -1,16 +1,22 @@
 var express = require('express');
 var path = require('path');
 var app = express();
-// var server = require('http').Server(app);
-// var io = require('socket.io')(server);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // Define the port to run on
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+io.on('connection', function (socket) {
+  socket.on("send data", function (data) {
+    data = JSON.stringify(data);
+  })
+});
+
 // Listen for requests
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function () {
   var port = server.address().port;
   console.log('Magic happens on port ' + port);
 });
