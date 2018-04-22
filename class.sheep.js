@@ -8,7 +8,7 @@ module.exports = class Sheep extends Animals {
         for (var i in SheepArr) {
             if (Sheep2Arr[0] && Sheep2Arr[0][0]) {
                 for (var k in Sheep2Arr) {
-                    if (Sheep2Arr[k][0] == SheepArr[i].x & Sheep2Arr[k][1] == SheepArr[i].y & SheepArr[i].gender != this.gender & SheepArr[i].old_y >= 2) {
+                    if (Sheep2Arr[k][0] == SheepArr[i].x & Sheep2Arr[k][1] == SheepArr[i].y & SheepArr[i].gender != this.gender & SheepArr[i].old_y >= 0.2) {
                         Sheep2Ill = SheepArr[i].ill;
                         Sheep2 = Sheep2Arr[k];
                         break;
@@ -16,14 +16,14 @@ module.exports = class Sheep extends Animals {
                 }
             }
             else {
-                if (Sheep2Arr[0] == SheepArr[i].x & Sheep2Arr[1] == SheepArr[i].y & SheepArr[i].gender != this.gender & SheepArr[i].old_y >= 2) {
+                if (Sheep2Arr[0] == SheepArr[i].x & Sheep2Arr[1] == SheepArr[i].y & SheepArr[i].gender != this.gender & SheepArr[i].old_y >= 0.2) {
                     Sheep2Ill = SheepArr[i].ill;                    
                     Sheep2 = Sheep2Arr;
                     break;
                 }
             }
         }
-        if (this.kerats >= 10 && this.old_y >= 2 && Sheep2) {
+        if (this.kerats >= 10 && this.old_y >= 0.2 && Sheep2) {
             var norVandak = random(this.yntrelVandak(0));
             if (norVandak.length == 0) {
                 norVandak = random(this.yntrelVandak(1));

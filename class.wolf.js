@@ -8,7 +8,7 @@ module.exports = class Wolf extends Animals {
         for (var i in WolfArr) {
             if (Wolf2Arr[0] && Wolf2Arr[0][0]) {
                 for (var k in Wolf2Arr) {
-                    if (Wolf2Arr[k][0] == WolfArr[i].x & Wolf2Arr[k][1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=3) {
+                    if (Wolf2Arr[k][0] == WolfArr[i].x & Wolf2Arr[k][1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=0.4) {
                         Wolf2Ill = WolfArr[i].ill;
                         Wolf2 = Wolf2Arr[k];
                         break;
@@ -16,7 +16,7 @@ module.exports = class Wolf extends Animals {
                 }
             }
             else {
-                if (Wolf2Arr[0] == WolfArr[i].x & Wolf2Arr[1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=3) {
+                if (Wolf2Arr[0] == WolfArr[i].x & Wolf2Arr[1] == WolfArr[i].y & WolfArr[i].gender != this.gender & WolfArr[i].old_y>=0.4) {
                     Wolf2 = Wolf2Arr;                    
                     Wolf2Ill = WolfArr[i].ill;
                     break;
@@ -24,7 +24,7 @@ module.exports = class Wolf extends Animals {
             }
         }
 
-        if (this.kerats == 10 && Wolf2 && this.old_y>=3) {
+        if (this.kerats == 10 && Wolf2 && this.old_y>=0.4) {
             var norVandak = random(this.yntrelVandak(0));
             if (norVandak.length == 0) {
                 norVandak = random(this.yntrelVandak(1));

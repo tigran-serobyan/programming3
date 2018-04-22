@@ -16,7 +16,7 @@ module.exports = class Black_hole extends Hole{
         return found;
     }
     bazmanal() {
-        if (this.kerats >= 500) {
+        if (this.kerats >= 300) {
             var x = Math.floor(Math.random() * (m - 1));
             var y = Math.floor(Math.random() * (n - 1));
             Black_holeArr.push(new Black_hole(x, y));

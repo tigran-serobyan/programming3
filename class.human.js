@@ -36,7 +36,7 @@ module.exports = class Human extends Animals {
         for (var i in HumanArr) {
             if (Human2Arr[0] && Human2Arr[0][0]) {
                 for (var k in Human2Arr) {
-                    if (Human2Arr[k][0] == HumanArr[i].x & Human2Arr[k][1] == HumanArr[i].y & HumanArr[i].gender != this.gender & HumanArr[i].old_y >= 15) {
+                    if (Human2Arr[k][0] == HumanArr[i].x & Human2Arr[k][1] == HumanArr[i].y & HumanArr[i].gender != this.gender & HumanArr[i].old_y >= 1.2) {
                         Human2Ill = HumanArr[i].ill;
                         Human2 = Human2Arr[k];
                         break;
@@ -44,14 +44,14 @@ module.exports = class Human extends Animals {
                 }
             }
             else {
-                if (Human2Arr[0] == HumanArr[i].x & Human2Arr[1] == HumanArr[i].y & HumanArr[i].gender != this.gender & HumanArr[i].old_y >= 15) {
+                if (Human2Arr[0] == HumanArr[i].x & Human2Arr[1] == HumanArr[i].y & HumanArr[i].gender != this.gender & HumanArr[i].old_y >= 1.2) {
                     Human2Ill = HumanArr[i].ill;
                     Human2 = Human2Arr;
                     break;
                 }
             }
         }
-        if (this.kerats >= 100 && Human2 & this.old_y>=15) {
+        if (this.kerats >= 100 && Human2 & this.old_y>=1.2) {
             var norVandak = random(this.yntrelVandak(0));
             if (!norVandak) {
                 norVandak = random(this.yntrelVandak(1));

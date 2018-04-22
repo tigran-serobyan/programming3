@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="statistics.js"></script>
+        <style>
+            #statistics div{
+                display: inline-block;
+                height: 20px;
+                margin: -2px;
+            }
+            #statistics{
+                width: 100%;
+                background-color: lightgray;
+            }
+            #Grass{
+                background-color: green;
+            }
+            #Sheep{
+                background-color: yellow;
+            }
+            #Wolf{
+                background-color: red;
+            }
+            #Human{
+                background-color: orange;
+            }
+            *{
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "statistics">
+            <div id="Grass"></div>
+            <div id="Sheep"></div>
+            <div id="Wolf"></div>
+            <div id="Human"></div>
+        </div>
+        <hr>
+        <p>1 year = 20 day, 1 day = 24 hour</p>
+        <p id ="oldest"></p>
+        <hr>
+        <p id ="ill"></p>
+        <hr>
+        <pre><span id="Grass_t"></span> Grass,     <span id="Sheep_t"></span> Sheep,     <span id="Wolf_t"></span> Wolf,     <span id="Human_t"></span> Human</pre>
+    </body>
+</html>
