@@ -190,10 +190,10 @@ function main() {
     var file = "data.json";
     var tokos = grassArr.length + SheepArr.length + WolfArr.length + HumanArr.length;
     var data = {
-      'Grass': grassArr.length / tokos * 100,
-      'Sheep': SheepArr.length / tokos * 100,
-      'Wolf': WolfArr.length / tokos * 100,
-      'Human': HumanArr.length / tokos * 100,
+      'Grass': grassArr.length / tokos * 99,
+      'Sheep': SheepArr.length / tokos * 99,
+      'Wolf': WolfArr.length / tokos * 99,
+      'Human': HumanArr.length / tokos * 99,
       'Grass_t': grassArr.length,
       'Sheep_t': SheepArr.length,
       'Wolf_t': WolfArr.length,
