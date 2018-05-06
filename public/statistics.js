@@ -1,10 +1,10 @@
 function main(){
     var socket = io.connect('http://localhost:3000');
     function statistics(statistics){
-        document.getElementById("Grass").style.width = statistics.Grass + "%";
-        document.getElementById("Sheep").style.width = statistics.Sheep + "%";
-        document.getElementById("Wolf").style.width = statistics.Wolf + "%";
-        document.getElementById("Human").style.width = statistics.Human + "%";
+        document.getElementById("Grass").style.width = statistics.Grass*7 + "px";
+        document.getElementById("Sheep").style.width = statistics.Sheep*7 + "px";
+        document.getElementById("Wolf").style.width = statistics.Wolf*7 + "px";
+        document.getElementById("Human").style.width = statistics.Human*7 + "px";
         document.getElementById("Grass").title = statistics.Grass_t;
         document.getElementById("Sheep").title = statistics.Sheep_t;
         document.getElementById("Wolf").title = statistics.Wolf_t;

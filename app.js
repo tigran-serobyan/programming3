@@ -174,7 +174,7 @@ function main() {
       }
       if (SheepArr[i].old_y > old_y) {
         old_y = SheepArr[i].old_y;
-        old_ch = 'Sheep';
+        old_ch = SheepArr[i].name;
 
       }
     }
@@ -184,7 +184,7 @@ function main() {
       }
       if (WolfArr[i].old_y > old_y) {
         old_y = WolfArr[i].old_y;
-        old_ch = 'Wolf';
+        old_ch = WolfArr[i].name;
       }
     }
     for (var i in HumanArr) {
@@ -193,7 +193,7 @@ function main() {
       }
       if (HumanArr[i].old_y > old_y) {
         old_y = HumanArr[i].old_y;
-        old_ch = 'Human';
+        old_ch = HumanArr[i].name;
 
       }
     }
@@ -216,7 +216,7 @@ function main() {
     };
     var json = JSON.stringify(data);
     fs.writeFile(file, json);
-        io.sockets.emit("statistics", data);
+    io.sockets.emit("statistics", data);
   }
   time_m += 18;
   if (time_m >= 60) {
@@ -340,4 +340,4 @@ function main() {
     }
   }
 }
-setInterval(main, 500);
+setInterval(main, 200);

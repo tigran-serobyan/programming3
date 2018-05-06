@@ -1,5 +1,5 @@
 var matrix = [[]];
-var side = 12;
+var side = 10;
 var time = 210;
 var time_h = 12;
 var time_m = 0;
@@ -7,18 +7,14 @@ var weather = 0;
 var j = 0;
 var game_over = false;
 function main() {
+    function setup() {
+        frameRate(5);
+        createCanvas(800, 900);
+        strokeWeight(0);
+    }
     var socket = io.connect('http://localhost:3000');
     function set_matrix(new_matrix) {
         matrix = new_matrix;
-        j++;
-        if (j == 1) {
-            function setup() {
-                frameRate(5);
-                createCanvas(matrix[0].length * side, matrix.length * side + 50);
-                strokeWeight(0);
-            }
-            setup();
-        }
     }
     function set_time(new_time) {
         time = new_time[0];

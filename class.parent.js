@@ -1,6 +1,10 @@
 var random = require('./random.js');
 module.exports = class Animals {
     constructor(x, y) {
+        this.name_arr = ["King","Winner","The Best","Killer","Fluffy",""];
+        this.name2_arr = ["Dog","Gevor","Gvidon","Snail","Turbo","Aliev","Putin","Trump","Rain","Rainbow","Chicken","Nikol","Lightning","Snowflake","Sunny","Summer","NASA","Messi","Agar","Arus"];
+        this.name3_arr = ["111","222","333","444","555","666","777","888","999","13","7","365",":)",":(",":D","<3",":))))))",":O",""];
+        this.name = random(this.name_arr) + random(this.name2_arr) + random(this.name3_arr);
         this.x = x;
         this.y = y;
         this.ill = false;

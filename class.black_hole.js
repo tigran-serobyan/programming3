@@ -1,4 +1,5 @@
 var Hole = require('./class.hole.js');
+var White_hole = require('./class.white_hole.js');
 var random = require('./random.js');
 module.exports = class Black_hole extends Hole{
     yntrelVandak() {

@@ -175,7 +175,7 @@ module.exports = class Human extends Animals {
                         }
                     }
                     if ((weather >= 1 && weather < 2) || (weather >= 3 && weather < 4)) {
-                        this.kerats += 1;
+                        this.kerats += 0.5;
                     }
                     else {
                         this.kerats++;
