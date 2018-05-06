@@ -15,6 +15,7 @@ function main(){
         document.getElementById("Human_t").innerText = statistics.Human_t;
         document.getElementById("oldest").innerText = "Now the oldest character is " + statistics.old[1] + ": " + statistics.old[0] + " years old";
         document.getElementById("ill").innerText = "Now there are " + statistics.ill_c + " ill characters, and " + statistics.ill_g + " ill grass";
+        document.getElementById("grass_new").innerText = statistics.grass_new + " new and " + statistics.grass_old + " destroyed grass from the start of the game ";
         
     }
     socket.on("statistics", statistics);

@@ -88,6 +88,7 @@ module.exports = class Sheep extends Animals {
                     if (grassArr[i].ill) {
                         this.ill = true;
                     }
+                    grass_old ++;                    
                     grassArr.splice(i, 1);
                     break;
                 }

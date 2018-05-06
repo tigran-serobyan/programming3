@@ -33,7 +33,6 @@ function main() {
         textSize(35);
         fill("black");
         text('Game Over', matrix.length * side / 2 - 100, matrix[0].length * side / 2 - 35);
-
     }
     socket.on("send matrix", set_matrix);
     socket.on("game over", game_over);
@@ -136,6 +135,5 @@ function draw() {
     else if (weather > 3 && weather < 4) {
         text('Now is ' + "Winter", matrix.length * side - 120, matrix[0].length * side + 30);
     }
-
 }
 window.onload = main;

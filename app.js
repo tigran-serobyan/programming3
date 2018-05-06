@@ -25,27 +25,33 @@ io.on('connection', function (socket) {
 matrix = [];
 n = 40;
 m = 40;
+grass_new = 0;
+grass_old = 0;
 var Grass_tokos = 65;
 var Sheep_tokos = 15;
 var Wolf_tokos = 0.5;
 var Human_tokos = 0.5;
 var Black_hole_tokos = 0.2;
+var Alien_tokos = 0.2;
 var time = 210;
 var time_h = 12;
 var time_m = 0;
 weather = 0;
+alien_human = 0;
 grassArr = [];
 SheepArr = [];
 WolfArr = [];
 HumanArr = [];
 Black_holeArr = [];
 White_holeArr = [];
+AlienArr = [];
 var Grass = require('./class.grass.js');
 var Sheep = require('./class.sheep.js');
 var Wolf = require('./class.wolf.js');
 var Human = require('./class.human.js');
 var Black_hole = require('./class.black_hole.js');
 var White_hole = require('./class.white_hole.js');
+var Alien = require('./class.alien.js');
 
 function setup() {
   for (var y = 0; y < n; y++) {
@@ -64,6 +70,7 @@ function setup() {
   HumanArr = [];
   Black_holeArr = [];
   White_holeArr = [];
+  AlienArr = [];
   for (var i = 0; i < n * m / 100 * Grass_tokos; i++) {
     var x = Math.floor(Math.random() * m);
     var y = Math.floor(Math.random() * n);
@@ -143,6 +150,9 @@ function setup() {
       }
     }
   }
+  for (var i = 0; i < n * m / 100 * Alien_tokos; i++) {
+    AlienArr.push(new Alien());
+  }
 }
 setup();
 var k = 0;
@@ -188,7 +198,7 @@ function main() {
       }
     }
     var file = "data.json";
-    var tokos = grassArr.length + SheepArr.length + WolfArr.length + HumanArr.length;
+    var tokos = n*m;
     var data = {
       'Grass': grassArr.length / tokos * 99,
       'Sheep': SheepArr.length / tokos * 99,
@@ -200,17 +210,13 @@ function main() {
       'Human_t': HumanArr.length,
       'old': [old_y, old_ch],
       'ill_c': ill_c,
-      'ill_g': ill_g
+      'ill_g': ill_g,
+      'grass_new':grass_new,
+      'grass_old':grass_old
     };
     var json = JSON.stringify(data);
     fs.writeFile(file, json);
-    fs.readFile(file, 'utf8', function (err, data) {
-      if (!err) {
-        io.sockets.emit("statistics", JSON.parse(data));
-      }
-      else {
-      }
-    });
+        io.sockets.emit("statistics", data);
   }
   time_m += 18;
   if (time_m >= 60) {
@@ -229,7 +235,7 @@ function main() {
     weather = 0;
   }
   if (weather == 1 || weather == 3) {
-    var ill = grassArr.length/15;
+    var ill = grassArr.length;
     while(ill > 0){
       random(grassArr).ill = true;
       ill--;
@@ -266,6 +272,10 @@ function main() {
     Black_holeArr[i].utel();
     Black_holeArr[i].bazmanal();
     Black_holeArr[i].anhetanal();
+  }
+  for (var i in AlienArr) {
+    AlienArr[i].utel();
+    AlienArr[i].bazmanal();
   }
   io.sockets.emit("send matrix", matrix);
   io.sockets.emit("send time", [time, time_h, time_m, weather]);
@@ -330,4 +340,4 @@ function main() {
     }
   }
 }
-setInterval(main, 300);
+setInterval(main, 500);

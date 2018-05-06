@@ -170,6 +170,7 @@ module.exports = class Human extends Animals {
                                 this.ill = true;
                             }
                             grassArr.splice(i, 1);
+                            grass_old ++;
                             break;
                         }
                     }
