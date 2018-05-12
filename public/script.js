@@ -5,16 +5,26 @@ var time_h = 12;
 var time_m = 0;
 var weather = 0;
 var j = 0;
+var r = 0;
 var game_over = false;
+var rain = '';
+function dragged() {
+}
+function dragStart(event) {
+}
 function main() {
     function setup() {
         frameRate(5);
-        createCanvas(800, 900);
+        createCanvas(side * matrix[0].length, side * matrix.length + 50);
         strokeWeight(0);
     }
     var socket = io.connect('http://localhost:3000');
     function set_matrix(new_matrix) {
         matrix = new_matrix;
+        j++;
+        if (j == 1) {
+            setup();
+        }
     }
     function set_time(new_time) {
         time = new_time[0];
@@ -30,9 +40,23 @@ function main() {
         fill("black");
         text('Game Over', matrix.length * side / 2 - 100, matrix[0].length * side / 2 - 35);
     }
+    function raining(rain) {
+        rain = true;
+    }
     socket.on("send matrix", set_matrix);
     socket.on("game over", game_over);
     socket.on("send time", set_time);
+    socket.on("raining", raining);
+    dragged = function () {
+        if(r%30 == 0){
+            socket.emit('rain', 'rain');
+        }
+        r++;
+    }
+    dragStart = function (event) {
+        r == 0;
+        event.dataTransfer.setData("Text", event.target.id);
+    }
 }
 function draw() {
     background('#bcbcbc');
@@ -119,6 +143,7 @@ function draw() {
     textSize(15);
     fill("black");
     text('The time is ' + time_h + ":" + time_m, 0, matrix[0].length * side + 30);
+    text(rain, matrix[0].length * side + 30);
     if (weather > 0 && weather < 1) {
         text('Now is ' + "Spring", matrix.length * side - 120, matrix[0].length * side + 30);
     }

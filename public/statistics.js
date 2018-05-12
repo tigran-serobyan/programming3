@@ -13,7 +13,7 @@ function main(){
         document.getElementById("Sheep_t").innerText = statistics.Sheep_t;
         document.getElementById("Wolf_t").innerText = statistics.Wolf_t;
         document.getElementById("Human_t").innerText = statistics.Human_t;
-        document.getElementById("oldest").innerText = "Now the oldest character is " + statistics.old[1] + ": " + statistics.old[0] + " years old";
+        document.getElementById("oldest").innerHTML = "Leaderbord <br>" + statistics.old[1][0] + " . . . . . " + statistics.old[0][0] + "<br>" + statistics.old[1][1] + " . . . . . " + statistics.old[0][1] + "<br>" + statistics.old[1][2] + " . . . . . " + statistics.old[0][2] + "<br>" + statistics.old[1][3] + " . . . . . " + statistics.old[0][3] + "<br>" + statistics.old[1][4] + " . . . . . " + statistics.old[0][4] + "<br>" + statistics.old[1][5] + " . . . . . " + statistics.old[0][5] + "<br>" + statistics.old[1][6] + " . . . . . " + statistics.old[0][6] + "<br>" + statistics.old[1][7] + " . . . . . " + statistics.old[0][7] + "<br>" +statistics.old[1][8] + " . . . . . " + statistics.old[0][8] + "<br>" + statistics.old[1][9] + " . . . . . " + statistics.old[0][9] + "<br>";
         document.getElementById("ill").innerText = "Now there are " + statistics.ill_c + " ill characters, and " + statistics.ill_g + " ill grass";
         document.getElementById("grass_new").innerText = statistics.grass_new + " new and " + statistics.grass_old + " destroyed grass from the start of the game ";
         

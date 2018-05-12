@@ -20,6 +20,7 @@ server.listen(3000);
 io.on('connection', function (socket) {
   io.sockets.emit("send matrix", matrix);
   io.sockets.emit("send time", [time, time_h, time_m, weather]);
+  socket.on("rain", function () { io.sockets.emit('raining', 'raining'); for (var i in grassArr) { grassArr[i].multiplay = 0; } });
 });
 
 matrix = [];
@@ -159,8 +160,8 @@ var k = 0;
 function main() {
   k++
   if (k % 5 == 0) {
-    var old_y = -1;
-    var old_ch;
+    var old_y = [-1];
+    var old_ch = [];
     var ill_c = 0;
     var ill_g = 0;
     for (var i in grassArr) {
@@ -168,37 +169,63 @@ function main() {
         ill_g++;
       }
     }
-    for (var i in SheepArr) {
-      if (SheepArr[i].ill) {
-        ill_c++;
+    for (var j = 0; j < 10; j++) {
+      old_y[j] = '';
+      old_ch[j] = '';
+      for (var i in SheepArr) {
+        if (j == 0 && SheepArr[i].ill) {
+          ill_c++;
+        }
+        if (SheepArr[i].old_y > old_y[j]) {
+          old_y[j] = SheepArr[i].old_y;
+          old_ch[j] = SheepArr[i].name;
+        }
+        if (j > 0) {
+          for (var l = 1; l <= j; l++) {
+            if (old_y[j] == old_y[j - l] && old_ch[j] == old_ch[j - l]) {
+              old_y[j] = '';
+              old_ch[j] = '';
+            }
+          }
+        }
       }
-      if (SheepArr[i].old_y > old_y) {
-        old_y = SheepArr[i].old_y;
-        old_ch = SheepArr[i].name;
-
+      for (var i in WolfArr) {
+        if (j == 0 && WolfArr[i].ill) {
+          ill_c++;
+        }
+        if (WolfArr[i].old_y > old_y[j]) {
+          old_y[j] = WolfArr[i].old_y;
+          old_ch[j] = WolfArr[i].name;
+        }
+        if (j > 0) {
+          for (var l = 1; l <= j; l++) {
+            if (old_y[j] == old_y[j - l] && old_ch[j] == old_ch[j - l]) {
+              old_y[j] = '';
+              old_ch[j] = '';
+            }
+          }
+        }
       }
-    }
-    for (var i in WolfArr) {
-      if (WolfArr[i].ill) {
-        ill_c++;
-      }
-      if (WolfArr[i].old_y > old_y) {
-        old_y = WolfArr[i].old_y;
-        old_ch = WolfArr[i].name;
-      }
-    }
-    for (var i in HumanArr) {
-      if (HumanArr[i].ill) {
-        ill_c++;
-      }
-      if (HumanArr[i].old_y > old_y) {
-        old_y = HumanArr[i].old_y;
-        old_ch = HumanArr[i].name;
-
+      for (var i in HumanArr) {
+        if (j == 0 && HumanArr[i].ill) {
+          ill_c++;
+        }
+        if (HumanArr[i].old_y > old_y[j]) {
+          old_y[j] = HumanArr[i].old_y;
+          old_ch[j] = HumanArr[i].name;
+        }
+        if (j > 0) {
+          for (var l = 1; l <= j; l++) {
+            if (old_y[j] == old_y[j - l] && old_ch[j] == old_ch[j - l]) {
+              old_y[j] = '';
+              old_ch[j] = '';
+            }
+          }
+        }
       }
     }
     var file = "data.json";
-    var tokos = n*m;
+    var tokos = grassArr.length + SheepArr.length + WolfArr.length + HumanArr.length;
     var data = {
       'Grass': grassArr.length / tokos * 99,
       'Sheep': SheepArr.length / tokos * 99,
@@ -211,14 +238,14 @@ function main() {
       'old': [old_y, old_ch],
       'ill_c': ill_c,
       'ill_g': ill_g,
-      'grass_new':grass_new,
-      'grass_old':grass_old
+      'grass_new': grass_new,
+      'grass_old': grass_old
     };
     var json = JSON.stringify(data);
     fs.writeFile(file, json);
     io.sockets.emit("statistics", data);
   }
-  time_m += 18;
+  time_m += 20;
   if (time_m >= 60) {
     time_h++;
     time_m -= 60;
@@ -226,19 +253,19 @@ function main() {
   if (time_h >= 24) {
     time_h = 0;
   }
-  time += 3;
+  time += 3.33334;
   if (time >= 240) {
     time = 0;
   }
-  weather += 0.0025;
+  weather += 0.075;
   if (weather >= 4) {
     weather = 0;
   }
-  if (weather == 1 || weather == 3) {
-    var ill = grassArr.length;
-    while(ill > 0){
-      random(grassArr).ill = true;
-      ill--;
+  if ((0.999 < weather < 1.111) || (2.999 < weather < 3.111)) {
+    for (var i in grassArr) {
+      if (1 == Math.round(Math.random())) {
+        grassArr[i].ill = true;
+      }
     }
   }
   for (var i in grassArr) {
@@ -248,94 +275,94 @@ function main() {
     SheepArr[i].utel();
     SheepArr[i].bazmanal();
     SheepArr[i].satkel();
-    if (SheepArr[i] && time_h == 0) {
+    if (time == 0) {
       SheepArr[i].old();
     }
   }
-  for (var i in WolfArr) {
-    WolfArr[i].utel();
-    WolfArr[i].bazmanal();
-    WolfArr[i].satkel();
-    if (WolfArr[i] && time_h == 0) {
-      WolfArr[i].old();
-    }
+}
+for (var i in WolfArr) {
+  WolfArr[i].utel();
+  WolfArr[i].bazmanal();
+  WolfArr[i].satkel();
+  if (time == 0) {
+    WolfArr[i].old();
   }
+}
+for (var i in HumanArr) {
+  HumanArr[i].utel();
+  HumanArr[i].bazmanal();
+  HumanArr[i].mahanal();
+  if (time == 0) {
+    HumanArr[i].old();
+  }
+}
+for (var i in Black_holeArr) {
+  Black_holeArr[i].utel();
+  Black_holeArr[i].bazmanal();
+  Black_holeArr[i].anhetanal();
+}
+for (var i in AlienArr) {
+  AlienArr[i].utel();
+  AlienArr[i].bazmanal();
+}
+io.sockets.emit("send matrix", matrix);
+io.sockets.emit("send time", [time, time_h, time_m, weather]);
+if (grassArr.length == 0 & SheepArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
+  io.sockets.emit("game over");
+}
+else if (SheepArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
+  io.sockets.emit("game over");
+}
+else if (grassArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
+  io.sockets.emit("game over");
+}
+else if (grassArr.length == 0 & SheepArr.length == 0 & HumanArr.length == 0) {
+  io.sockets.emit("game over");
+}
+else if (grassArr.length == 0 & SheepArr.length == 0 & WolfArr.length == 0) {
+  io.sockets.emit("game over");
+}
+if (SheepArr.length == 0 & WolfArr.length == 0) {
   for (var i in HumanArr) {
-    HumanArr[i].utel();
-    HumanArr[i].bazmanal();
-    HumanArr[i].mahanal();
-    if (HumanArr[i] && time_h == 0) {
-      HumanArr[i].old();
+    if (i == 0) {
+      var gender = HumanArr[i].gender;
     }
-  }
-  for (var i in Black_holeArr) {
-    Black_holeArr[i].utel();
-    Black_holeArr[i].bazmanal();
-    Black_holeArr[i].anhetanal();
-  }
-  for (var i in AlienArr) {
-    AlienArr[i].utel();
-    AlienArr[i].bazmanal();
-  }
-  io.sockets.emit("send matrix", matrix);
-  io.sockets.emit("send time", [time, time_h, time_m, weather]);
-  if (grassArr.length == 0 & SheepArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
-    io.sockets.emit("game over");
-  }
-  else if (SheepArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
-    io.sockets.emit("game over");
-  }
-  else if (grassArr.length == 0 & WolfArr.length == 0 & HumanArr.length == 0) {
-    io.sockets.emit("game over");
-  }
-  else if (grassArr.length == 0 & SheepArr.length == 0 & HumanArr.length == 0) {
-    io.sockets.emit("game over");
-  }
-  else if (grassArr.length == 0 & SheepArr.length == 0 & WolfArr.length == 0) {
-    io.sockets.emit("game over");
-  }
-  if (SheepArr.length == 0 & WolfArr.length == 0) {
-    for (var i in HumanArr) {
-      if (i == 0) {
-        var gender = HumanArr[i].gender;
+    else {
+      if (HumanArr[i].gender != gender) {
+        break;
       }
       else {
-        if (HumanArr[i].gender != gender) {
-          break;
-        }
-        else {
-          io.sockets.emit("game over");
-        }
+        io.sockets.emit("game over");
       }
     }
   }
-  if (HumanArr.length == 0 & WolfArr.length == 0) {
-    for (var i in SheepArr) {
-      if (i == 0) {
-        var gender = SheepArr[i].gender;
+}
+if (HumanArr.length == 0 & WolfArr.length == 0) {
+  for (var i in SheepArr) {
+    if (i == 0) {
+      var gender = SheepArr[i].gender;
+    }
+    else {
+      if (SheepArr[i].gender != gender) {
+        break;
       }
       else {
-        if (SheepArr[i].gender != gender) {
-          break;
-        }
-        else {
-          io.sockets.emit("game over");
-        }
+        io.sockets.emit("game over");
       }
     }
   }
-  if (HumanArr.length == 0 & SheepArr.length == 0) {
-    for (var i in WolfArr) {
-      if (i == 0) {
-        var gender = WolfArr[i].gender;
+}
+if (HumanArr.length == 0 & SheepArr.length == 0) {
+  for (var i in WolfArr) {
+    if (i == 0) {
+      var gender = WolfArr[i].gender;
+    }
+    else {
+      if (WolfArr[i].gender != gender) {
+        break;
       }
       else {
-        if (WolfArr[i].gender != gender) {
-          break;
-        }
-        else {
-          io.sockets.emit("game over");
-        }
+        io.sockets.emit("game over");
       }
     }
   }

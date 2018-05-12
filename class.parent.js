@@ -1,9 +1,9 @@
 var random = require('./random.js');
 module.exports = class Animals {
     constructor(x, y) {
-        this.name_arr = ["King","Winner","The Best","Killer","Fluffy",""];
-        this.name2_arr = ["Dog","Gevor","Gvidon","Snail","Turbo","Aliev","Putin","Trump","Rain","Rainbow","Chicken","Nikol","Lightning","Snowflake","Sunny","Summer","NASA","Messi","Agar","Arus"];
-        this.name3_arr = ["111","222","333","444","555","666","777","888","999","13","7","365",":)",":(",":D","<3",":))))))",":O",""];
+        this.name_arr = ["King","Winner","The Best","Killer","Fluffy","Duxov","Fat","Stupid","Clever", "Ankap", "Rebel", "Warrior", "Genius", "Happy", "Explorer", "Round","Fat","Tasty","Angry","#","Txmar","@","Small",""];
+        this.name2_arr = ["Dog","Gevor","Gvidon","Snail","Turbo","Aliev","Putin","Trump","Rain","Rainbow","Chicken","Nikol","Lightning","Snowflake","Sunny","Summer","NASA","Messi","Agar","Arus","Elena","Areg","Tonoyan","Sargsyan","Serj","Venera","Vardan","Karapetyan","Karen","Matevosyan","Hrant","Khachatryan","Narek","Atoyan","Hayk","Safaryan"];
+        this.name3_arr = ["111","222","333","444","555","666","777","888","999","13","7","365",":)",":(",":D","<3",":))))))",":O","[_])", ":3","-___-","D)","O)",";)",";(","^_^","*_*",">>>",">>>> hi hi"];
         this.name = random(this.name_arr) + random(this.name2_arr) + random(this.name3_arr);
         this.x = x;
         this.y = y;
@@ -15,7 +15,7 @@ module.exports = class Animals {
         this.gender = Math.floor(Math.random() * 2);
     }
     old(){
-        this.old_y += 0.05;
+        this.old_y += 0.25;
     }
     direction() {
         this.directions = [
