@@ -15,7 +15,7 @@ function dragStart(event) {
 function main() {
     function setup() {
         frameRate(5);
-        createCanvas(side * matrix[0].length, side * matrix.length + 50);
+        createCanvas(side * matrix[0].length * 2, side * matrix.length*2 + 100);
         strokeWeight(0);
     }
     var socket = io.connect('http://localhost:3000');
@@ -41,14 +41,14 @@ function main() {
         text('Game Over', matrix.length * side / 2 - 100, matrix[0].length * side / 2 - 35);
     }
     function raining(rain) {
-        rain = true;
+        rain = 'Now is raining';
     }
     socket.on("send matrix", set_matrix);
     socket.on("game over", game_over);
     socket.on("send time", set_time);
     socket.on("raining", raining);
     dragged = function () {
-        if(r%30 == 0){
+        if (r % 10 == 0) {
             socket.emit('rain', 'rain');
         }
         r++;
