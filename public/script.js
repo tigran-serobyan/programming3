@@ -15,7 +15,7 @@ function dragStart(event) {
 function main() {
     function setup() {
         frameRate(5);
-        createCanvas(side * matrix[0].length * 2, side * matrix.length*2 + 100);
+        createCanvas(side * matrix[0].length * 2, side * matrix.length * 2 + 100);
         strokeWeight(0);
     }
     var socket = io.connect('http://localhost:3000');

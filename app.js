@@ -242,7 +242,6 @@ function main() {
       'grass_old': grass_old
     };
     var json = JSON.stringify(data);
-    fs.writeFile(file, json);
     io.sockets.emit("statistics", data);
   }
   time_m += 20;
